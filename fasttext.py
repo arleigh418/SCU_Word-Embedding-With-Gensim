@@ -2,7 +2,7 @@
 
 from gensim.models import FastText
 
-with open ('your_file.xlsx.txt','r',encoding  = 'utf-8') as f:
+with open ('your_file.txt','r',encoding  = 'utf-8') as f:
     f1 = f.read()
 
 sentence = list(jieba.cut(f1))
