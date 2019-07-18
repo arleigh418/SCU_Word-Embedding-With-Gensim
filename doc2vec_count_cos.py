@@ -57,14 +57,14 @@ model = Doc2Vec.load('test.model')
 
 
 
-def cos_sim(vector_a, vector_b):  #為方便觀測，將cos值特殊處理，若無需要可直接return cos
+def cos_sim(vector_a, vector_b):  
     vector_a = np.mat(vector_a)
     vector_b = np.mat(vector_b)
     num = vector_a * vector_b.T
     denom = np.linalg.norm(vector_a) * np.linalg.norm(vector_b)
     cos = num / denom
-    sim = 0.5 + 0.5 * cos
-    return sim
+   
+    return cos
 
 
 
@@ -99,7 +99,7 @@ word_center = sent2vec(model,word_cent)
 count =0
 score= []
 look = []
-#個篇文章與中心文章比較
+
 for x in b:
    # print(x)
    word_compare = sent2vec(model,x)
