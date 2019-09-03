@@ -1,22 +1,27 @@
-
-
 from gensim.models import FastText
+import pandas as pd
 
-with open ('your_file.txt','r',encoding  = 'utf-8') as f:
-    f1 = f.read()
+article = pd.read_excel('Cut_Finish_jieba.xlsx')
 
-sentence = list(jieba.cut(f1))
+sentences = article['內容'].tolist()
+
+split_sentences = []
+
+for i in sentences:
+    split_sentences.append(i.split(' '))
+
+print('訓練開始')
 # build a Word2Vce model
-model = FastText([sentence], size=50, window=5, min_count=5, workers=4, iter=100)
+model = FastText(split_sentences, size=500, window=10, min_count=5, workers=4)
 # save model to file
-model.save("fastText.model")
+model.save("fastText_stock.model")
 # load model to python
 # model = Word2Vec.load("word2vec.model")
 
-print(model.wv['電影'])
-print(model.wv['劇情'])
-print(model.wv['導演'])
 
-model.most_similar("電影", topn=5)
-model.most_similar("劇情", topn=5)
-model.most_similar("導演", topn=5)
+
+print(model.most_similar("台積電", topn=5))
+print(model.most_similar("鴻海", topn=5))
+print(model.most_similar("中華電信", topn=5))
+print(model.most_similar("仁寶", topn=5))
+print(model.most_similar("兆豐金", topn=5))
