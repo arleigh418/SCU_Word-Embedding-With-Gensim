@@ -3,7 +3,6 @@ import jieba
 import pandas as pd
 import os
 from gensim.models.doc2vec import Doc2Vec
-import re 
 import numpy as np
 
 import xlwt
@@ -12,36 +11,29 @@ TaggededDocument = gensim.models.doc2vec.TaggedDocument
  
 
 
-model = Doc2Vec.load('test.model')
+model = Doc2Vec.load('your.model')
+x = pd.read_excel('Cut_Finish_jieba.xlsx',encoding = 'utf-8')
 
 
-
-def cos_sim(vector_a, vector_b):  
-    vector_a = np.mat(vector_a)
-    vector_b = np.mat(vector_b)
-    num = vector_a * vector_b.T
-    denom = np.linalg.norm(vector_a) * np.linalg.norm(vector_b)
-    cos = num / denom
-   
+def cos_sim(vector1, vector2):  
+    cos=np.dot(vector1,vector2)/(np.linalg.norm(vector1)*(np.linalg.norm(vector2)))
     return cos
 
-
-
-def sent2vec(model, words): 
+def count_vector(model, words): 
     vect_list = []
-    for w in words:
-        try:
-            vect_list.append(model.wv[w])
+    vec = np.zeros(500) 
+    for w in words:  
+        try:    
+           vec = vec + model.wv[w]
         except:
-            x = np.zeros(300)
-            vect_list.append(x)
             continue
-    vect_list = np.array(vect_list)
-    vect = vect_list.sum(axis=0)
-    return vect / np.sqrt((vect ** 2).sum())
+    return vec
 
 
-
-
+for i in x:
+ i = i.split(' ')
+ vec = count_vector(model,i)
+ cos = cos_sim(vec,model.wv['鴻海'])
+ print(cos)
 
 
