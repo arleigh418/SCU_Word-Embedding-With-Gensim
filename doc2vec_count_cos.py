@@ -9,7 +9,7 @@ TaggededDocument = gensim.models.doc2vec.TaggedDocument
 
 model = Doc2Vec.load('your.model')
 x = pd.read_excel('Cut_Finish_jieba.xlsx',encoding = 'utf-8')
-
+article = x['內容'].tolist()
 
 def cos_sim(vector1, vector2):  
     cos=np.dot(vector1,vector2)/(np.linalg.norm(vector1)*(np.linalg.norm(vector2)))
@@ -26,7 +26,7 @@ def count_vector(model, words):
     return vec
 
 
-for i in x:
+for i in article:
  i = i.split(' ')
  vec = count_vector(model,i)
  cos = cos_sim(vec,model.wv['鴻海'])
