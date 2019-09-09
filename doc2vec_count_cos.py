@@ -1,12 +1,8 @@
 import gensim
-import jieba
 import pandas as pd
 import os
 from gensim.models.doc2vec import Doc2Vec
 import numpy as np
-
-import xlwt
-jieba.load_userdict('new_words.txt')
 TaggededDocument = gensim.models.doc2vec.TaggedDocument
  
 
